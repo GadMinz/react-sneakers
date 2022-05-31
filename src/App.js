@@ -1,19 +1,27 @@
+import React from "react";
 import Card from "./components/Card";
 import Header from "./components/Header";
 import Drawer from "./components/Drawer";
-
-const sneakers = [
-    {title: 'Мужские кроссовки Nike Air Max 270', price: 12799, imageUrl: '/img/sneakers/1.jpg'},
-    {title: 'Мужские кроссовки Nike Air Max 370', price: 15600, imageUrl: '/img/sneakers/2.jpg'},
-    {title: 'Мужские кроссовки Nike Air Max 470', price: 13200, imageUrl: '/img/sneakers/3.jpg'},
-    {title: 'Мужские кроссовки Nike Air Max 570', price: 14999, imageUrl: '/img/sneakers/4.jpg'},
-]
+import axios from "axios";
 
 function App() {
+    const [items, setItems] = React.useState([])
+    const [cartItems, setCartItems] = React.useState([])
+    const [cartOpened, serCartOpened] = React.useState(false)
+
+    React.useEffect(() => {
+        axios.get("https://6295f6a9810c00c1cb6c47af.mockapi.io/items").then(res => {
+            setItems(res.data)
+        })
+    }, [])
+
+    const onAddToCart = (item) => {
+        setCartItems(prev => [...prev, item])
+    }
     return (
         <div className="wrapper">
-            <Drawer/>
-            <Header/>
+            {cartOpened && <Drawer items={cartItems} onClose={() => serCartOpened(false)}/>}
+            <Header onClickCart={() => serCartOpened(true)}/>
             <div className="content">
                 <div className='content-header'>
                     <h1>Все кроссовки</h1>
@@ -23,7 +31,12 @@ function App() {
                     </div>
                 </div>
                 <div className="sneakers">
-                    {sneakers.map((el, i )=> <Card key={i} {...el}/>)}
+                    {items.map((item, i) => <Card
+                        key={item.id + i}
+                        onPlus={() => onAddToCart(item)}
+                        onFavorite={() => console.log('favorite')}
+                        {...item}
+                    />)}
                 </div>
             </div>
         </div>

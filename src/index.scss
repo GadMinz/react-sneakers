@@ -42,7 +42,7 @@ body {
 
     &-cart {
       display: flex;
-
+      cursor: pointer;
       span {
         padding: 0 20px;
       }
@@ -63,6 +63,11 @@ body {
     justify-content: space-between;
     margin-bottom: 40px;
   }
+  .sneakers {
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+  }
 }
 
 .search-block {
@@ -77,11 +82,6 @@ body {
     font-size: 16px;
     width: 200px;
   }
-}
-
-.sneakers {
-  display: flex;
-  gap: 30px;
 }
 
 
