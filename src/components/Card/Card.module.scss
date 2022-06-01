@@ -24,6 +24,10 @@
   b {
     font-size: 14px;
   }
+  .favorite {
+    position: absolute;
+    cursor: pointer;
+  }
 
   &Bottom {
     display: flex;
@@ -33,11 +37,6 @@
     &Price {
       display: flex;
       flex-direction: column;
-    }
-
-    .favorite {
-      position: absolute;
-      cursor: pointer;
     }
     .plus {
       cursor: pointer;
