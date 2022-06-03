@@ -1,6 +1,33 @@
 import React from 'react';
+import Info from "./Info";
+import {AppContext} from "../App";
+import axios from "axios";
 
+const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 const Drawer = ({items, onClose, onRemove}) => {
+    const [isOrderCompleted, setIsOrderCompleted] = React.useState(false)
+    const [orderId, setOrderId] = React.useState(null)
+    const [isLoading, setIsLoading] = React.useState(false)
+    const {setCartItems} = React.useContext(AppContext)
+
+    const onClickOrder = async () => {
+        setIsLoading(true)
+        try {
+            const {data} = await axios.post("https://6295f6a9810c00c1cb6c47af.mockapi.io/orders", {items})
+            setOrderId(data.id)
+            setIsOrderCompleted(true)
+            setCartItems([])
+
+            for (const item of items) {
+                await axios.delete(`https://6295f6a9810c00c1cb6c47af.mockapi.io/cart/${item.id}`)
+                await delay(1000)
+            }
+        } catch (e) {
+            alert('Не удалось создать заказ')
+        }
+        setIsLoading(false)
+    }
+
     return (
         <div className="overlay">
             <div className="drawer">
@@ -10,7 +37,7 @@ const Drawer = ({items, onClose, onRemove}) => {
                 </h2>
 
                 {items.length > 0
-                    ? <div>
+                    ? <div className='cart-wrapper'>
                         <div className="cart">
                             {items.map((el, i) => (
                                 <div key={i} className="cart-item">
@@ -39,18 +66,14 @@ const Drawer = ({items, onClose, onRemove}) => {
                                     <b>1074 руб.</b>
                                 </li>
                             </ul>
-                            <button className='green-button'>Оформить заказ <img src="/img/arrow.svg" alt="Arrow"/>
+                            <button disabled={isLoading} onClick={onClickOrder} className='green-button'>Оформить заказ <img
+                                src="/img/arrow.svg" alt="Arrow"/>
                             </button>
                         </div>
                     </div>
-                    : <div className="cart-empty">
-                        <img className='cart-empty-icon' src="/img/empty-cart.svg" alt="empty-cart"/>
-                        <h2>В корзине нет товаров</h2>
-                        <p>Найдите то, что вам нужно в каталоге</p>
-                        <button onClick={onClose} className='green-button'>
-                            <img src="/img/arrow.svg" alt="Arrow"/>Вернуться назад
-                        </button>
-                    </div>
+                    : <Info title={isOrderCompleted ? 'Заказ оформлен!' : 'В корзине нет товаров'}
+                            description={isOrderCompleted ? `Ваш заказ №${orderId} оформлен!` : 'Найдите то, что вам нужно в каталоге'}
+                            image={isOrderCompleted ? '/img/completed-order.svg' : "/img/empty-cart.svg"}/>
                 }
             </div>
         </div>
