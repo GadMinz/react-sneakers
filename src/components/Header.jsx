@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from "react-router-dom";
 
-const Header = ({onClickCart}) => {
+const Header = ({onClickCart, totalPrice}) => {
     return (
         <header className='header'>
             <Link to='/'>
@@ -16,7 +16,7 @@ const Header = ({onClickCart}) => {
             <ul className='header-right'>
                 <li onClick={onClickCart} className='header-right-cart'>
                     <img width={20} height={20} src="/img/Cart.svg" alt="Cart"/>
-                    <span>12312 руб.</span>
+                    <span>{totalPrice} руб.</span>
                 </li>
                 <li className='header-right-favorite'>
                     <Link to='favorites'>
@@ -24,7 +24,9 @@ const Header = ({onClickCart}) => {
                     </Link>
                 </li>
                 <li className='header-right-user'>
-                    <img width={20} height={20} src="/img/User.svg" alt="User"/>
+                    <Link to='orders'>
+                        <img width={20} height={20} src="/img/User.svg" alt="User"/>
+                    </Link>
                 </li>
             </ul>
         </header>

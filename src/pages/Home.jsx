@@ -17,8 +17,8 @@ const Home = ({
             .map((item, i) =>
                 <Card
                     key={i}
-                    onPlus={() => onAddToCart(item)}
-                    onFavorite={() => onAddToFavorite(item)}
+                    onFavorite={(obj) => onAddToFavorite(obj)}
+                    onPlus={(obj) => onAddToCart(obj)}
                     loading={isLoading}
                     {...item}
                 />)

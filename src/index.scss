@@ -48,10 +48,12 @@ body {
         margin: 0 20px;
       }
     }
+
     &-favorite {
       display: flex;
       margin-right: 20px;
     }
+
     &-user {
       display: flex;
     }
@@ -106,6 +108,19 @@ body {
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 1;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.1s ease-in-out, visibility 0.1s ease-in-out;
+  overflow: hidden;
+}
+
+.visible {
+  opacity: 1;
+  visibility: visible;
+
+  .drawer {
+    transform: translateX(0);
+  }
 }
 
 .drawer {
@@ -118,17 +133,21 @@ body {
   padding: 30px;
   display: flex;
   flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 0.3s ease-in-out;
 }
 
 .cart {
   flex: 1;
   overflow: auto;
   margin-bottom: 40px;
+
   &-wrapper {
     flex: 1;
     display: flex;
     flex-direction: column;
   }
+
   &-title {
     display: flex;
     justify-content: space-between;
@@ -216,11 +235,13 @@ body {
     align-items: center;
     justify-content: center;
     flex: 1;
+
     &-icon {
       height: 100px;
       width: 100px;
       margin-bottom: 20px;
     }
+
     p {
       width: 280px;
       line-height: 24px;
@@ -229,9 +250,11 @@ body {
     .green-button {
       width: 245px;
       margin-top: 20px;
+
       &:disabled {
         animation: button-loading 0.6s ease-in-out infinite;
       }
+
       &:hover {
         img {
           transform: rotate(180deg) translateX(3px);
@@ -274,6 +297,7 @@ button {
     background: #bebebe !important;
     cursor: default;
   }
+
   &:hover {
     background: lighten(#9dd558, 5%);
   }
@@ -290,6 +314,16 @@ button {
 
   &:hover {
     opacity: 1;
+  }
+}
+
+.order {
+  margin-bottom: 20px;
+
+  h2 {
+    padding-bottom: 5px;
+    margin-bottom: 20px;
+    border-bottom: 1px #e9e7e7 solid;
   }
 }
 

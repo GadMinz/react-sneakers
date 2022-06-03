@@ -6,13 +6,17 @@ import {AppContext} from "../../App";
 const Card = ({id, title, price, imageUrl, onPlus, onFavorite, favorited = false, loading = false}) => {
     const {isItemAdded} = React.useContext(AppContext)
     const [isFavorite, setIsFavorite] = React.useState(favorited)
+    const obj = { id, parentId: id, title, imageUrl, price };
+
     const onClickPlus = () => {
-        onPlus()
-    }
+        onPlus(obj);
+    };
+
     const onClickFavorite = () => {
-        onFavorite()
-        setIsFavorite(!isFavorite)
-    }
+        onFavorite(obj);
+        setIsFavorite(!isFavorite);
+    };
+
     return (
         <div className={styles.card}>
             {loading
@@ -32,8 +36,9 @@ const Card = ({id, title, price, imageUrl, onPlus, onFavorite, favorited = false
                 </ContentLoader>
                 : <>
                     <div className={styles.favorite}>
-                        <img onClick={onClickFavorite} src={isFavorite ? "/img/liked.svg" : "/img/unliked.svg"}
-                             alt="liked"/>
+                        {onFavorite &&
+                            <img onClick={onClickFavorite} src={isFavorite ? "/img/liked.svg" : "/img/unliked.svg"}
+                                 alt="liked"/>}
                     </div>
                     <img width={133} height={112} src={imageUrl} alt=""/>
                     <h5>{title}</h5>
@@ -42,9 +47,9 @@ const Card = ({id, title, price, imageUrl, onPlus, onFavorite, favorited = false
                             <span>Цена:</span>
                             <b>{price}р.</b>
                         </div>
-                        <img className={styles.plus} onClick={onClickPlus}
-                             src={isItemAdded(id) ? "/img/btn-checked.svg" : "/img/btn-plus.svg"}
-                             alt="Checked"/>
+                        {onPlus && <img className={styles.plus} onClick={onClickPlus}
+                                        src={isItemAdded(id) ? "/img/btn-checked.svg" : "/img/btn-plus.svg"}
+                                        alt="Checked"/>}
                     </div>
                 </>
             }

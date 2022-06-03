@@ -4,11 +4,12 @@ import {AppContext} from "../App";
 import axios from "axios";
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
-const Drawer = ({items, onClose, onRemove}) => {
+
+const Drawer = ({items, onClose, onRemove, opened}) => {
     const [isOrderCompleted, setIsOrderCompleted] = React.useState(false)
     const [orderId, setOrderId] = React.useState(null)
     const [isLoading, setIsLoading] = React.useState(false)
-    const {setCartItems} = React.useContext(AppContext)
+    const {setCartItems, totalPrice} = React.useContext(AppContext)
 
     const onClickOrder = async () => {
         setIsLoading(true)
@@ -29,7 +30,7 @@ const Drawer = ({items, onClose, onRemove}) => {
     }
 
     return (
-        <div className="overlay">
+        <div className={`overlay ${opened ? `visible` : ''}`}>
             <div className="drawer">
                 <h2 className='cart-title'>
                     Корзина
@@ -58,12 +59,12 @@ const Drawer = ({items, onClose, onRemove}) => {
                                 <li>
                                     <span>Итого:</span>
                                     <div></div>
-                                    <b>21 213 руб.</b>
+                                    <b>{totalPrice} руб.</b>
                                 </li>
                                 <li>
                                     <span>Налог 5%:</span>
                                     <div></div>
-                                    <b>1074 руб.</b>
+                                    <b>{(totalPrice * 0.05).toFixed(2)} руб.</b>
                                 </li>
                             </ul>
                             <button disabled={isLoading} onClick={onClickOrder} className='green-button'>Оформить заказ <img
