@@ -124,7 +124,7 @@ function App() {
                         opened={cartOpened}/>
                 <Header totalPrice={totalPrice} onClickCart={() => setCartOpened(true)}/>
                 <Routes>
-                    <Route path='/' element={<Home
+                    <Route path={process.env.PUBLIC_URL + '/'} element={<Home
                         items={items}
                         searchValue={searchValue}
                         setSearchValue={setSearchValue}
@@ -135,11 +135,11 @@ function App() {
                         isLoading={isLoading}
                     />
                     } exact/>
-                    <Route path='/favorites' element={<Favorites
+                    <Route path={process.env.PUBLIC_URL + '/favorites'} element={<Favorites
                         onAddToCart={onAddToCart}
                     />
                     } exact/>
-                    <Route path='/orders' element={<Orders
+                    <Route path={process.env.PUBLIC_URL + '/orders'} element={<Orders
                         onAddToCart={onAddToCart}
                     />
                     } exact/>

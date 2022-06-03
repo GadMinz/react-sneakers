@@ -29,10 +29,10 @@ const Home = ({
             <div className='content-header'>
                 <h1>{searchValue ? `Поиск по запросу: "${searchValue}"` : 'Все кроссовки'}</h1>
                 <div className="search-block">
-                    <img src="/img/search.svg" alt="search"/>
+                    <img src="img/search.svg" alt="search"/>
                     <input value={searchValue} onChange={onChangeSearchItem} placeholder='Поиск...'/>
                     {searchValue &&
-                        <img className='search-block-clear' onClick={() => setSearchValue('')} src="/img/plus.svg"
+                        <img className='search-block-clear' onClick={() => setSearchValue('')} src="img/plus.svg"
                              alt='clear'/>}
                 </div>
             </div>
